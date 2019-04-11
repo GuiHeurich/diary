@@ -1,26 +1,25 @@
 require 'diary'
 
-describe SecretDiary do
+describe Diary do
 
   describe '#initialize' do
-    context "diary is locked when created" do
-      it "status is set to locked" do
-      expect(subject.status).to eq "locked"
-      end
+    it "@entries is empty when created" do
+      expect(subject.entries).to be_empty
     end
   end
 
-describe '#lock' do
-    it 'locks the diary' do
-      expect(subject.status).to eq "locked"
-      expect(subject.lock).to eq "Diary locked!"
+  describe '#add_entry' do
+    it "creates entries" do
+      subject.add_entry("I went for a walk today")
+      expect(subject.entries.count).to eq(1)
     end
   end
 
-  describe '#unlock' do
-    it 'unlocks the diary' do
-      expect(subject.unlock).to eq "Diary unlocked!"
-      expect(subject.status).to eq "unlocked"
+  describe '#get_entries' do
+    it "lists entries from the diary" do
+      subject.add_entry("I went for a walk today")
+      expect(subject.get_entries).to eq("Your entries are: #{subject.entries}")
     end
   end
+
 end

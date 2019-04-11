@@ -1,19 +1,23 @@
-require_relative 'entry_manager'
+require_relative 'SecretDiary'
+require 'date'
 
-class SecretDiary
-  attr_reader :status
+class Diary
+
+  attr_reader :entries
 
   def initialize
-    @status = "locked"
+    @diary = SecretDiary.new
+    @entries = {}
   end
 
-  def lock
-    @status = "locked"
-    "Diary locked!"
+  def add_entry(entry)
+    @diary.unlock
+    date = DateTime.now
+    @entries[date.strftime "%d/%m/%Y"] = entry
   end
 
-  def unlock
-    @status = "unlocked"
-    "Diary unlocked!"
+  def get_entries
+    @diary.unlock
+    "Your entries are: #{@entries.each { |key, value| "#{key.to_s}: #{value.to_s}" } }"
   end
 end
